@@ -12,7 +12,9 @@ int main() {
 
   int value = 0;
   while (1) {
-    read(from_server, &value, sizeof(value));
+    if (read(from_server, &value, sizeof(value)) == -1) {
+      exit(0);
+    }
     printf("client: received %d\n", value);
   }
 }

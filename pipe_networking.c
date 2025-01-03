@@ -132,4 +132,12 @@ int server_connect(int from_client) {
   return to_client;
 }
 
+void handle_sigint_server() {
+  unlink(WKP);
+  exit(0);
+}
+
+void handle_sigpipe_server() {
+  printf("client disconnected\n");
+}
 

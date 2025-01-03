@@ -38,4 +38,7 @@ int server_setup();
 int multi_server_setup();
 // int multi_server_connect(int from_client, struct message m);
 
+void handle_sigint_server();
+void handle_sigpipe_server();
+
 #endif

@@ -12,7 +12,9 @@ int main() {
   int value = 0;
   while (1) {
     value = rand() % 101;
-    write(to_client, &value, sizeof(value));
+    if (write(to_client, &value, sizeof(value)) == -1) {
+      exit(0);
+    }
     printf("server: sent %d\n", value);
     sleep(1);
   }
