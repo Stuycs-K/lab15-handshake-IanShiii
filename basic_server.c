@@ -8,4 +8,12 @@ int main() {
 
   printf("server: to_client: %d\n", to_client);
   printf("server: from_client: %d\n", from_client);
+
+  int value = 0;
+  while (1) {
+    value = rand() % 101;
+    write(to_client, &value, sizeof(value));
+    printf("server: sent %d\n", value);
+    sleep(1);
+  }
 }
