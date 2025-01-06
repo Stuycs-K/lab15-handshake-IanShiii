@@ -11,11 +11,14 @@ client: client_ex
 client_ex: basic_client.o pipe_networking.o
 	@gcc -o client_ex basic_client.o pipe_networking.o
 
-server_ex: persistent_server.o pipe_networking.o
-	@gcc -o server_ex persistent_server.o pipe_networking.o
+server_ex: forking_server.o pipe_networking.o
+	@gcc -o server_ex forking_server.o pipe_networking.o
 
 basic_client.o: basic_client.c pipe_networking.h
 	@gcc -c basic_client.c
+
+forking_server.o: forking_server.c pipe_networking.h
+	@gcc -c forking_server.c
 
 persistent_server.o: persistent_server.c pipe_networking.h
 	@gcc -c persistent_server.c

@@ -128,7 +128,23 @@ int client_handshake(int *to_server) {
   returns the file descriptor for the downstream pipe.
   =========================*/
 int server_connect(int from_client) {
-  int to_client  = 0;
+  char to_client_string[HANDSHAKE_BUFFER_SIZE]; // also the pid of the child process
+  read(from_client, &to_client_string, HANDSHAKE_BUFFER_SIZE);
+
+  int to_client = open(to_client_string, O_WRONLY);
+  srand(time(NULL));
+  int SYN_ACK = rand();
+  write(to_client, &SYN_ACK, sizeof(SYN_ACK));
+
+  int ACK_RECIEVED = -1;
+  read(from_client, &ACK_RECIEVED, sizeof(ACK_RECIEVED));
+  if (ACK_RECIEVED != SYN_ACK + 1) {
+    char error[100];
+    sprintf(error, "ACK not recieved correctly (SYN_ACK = %d, ACK = %d\n", SYN_ACK, ACK_RECIEVED);
+    perror(error);
+    exit(EXIT_FAILURE);
+  }
+
   return to_client;
 }
 
